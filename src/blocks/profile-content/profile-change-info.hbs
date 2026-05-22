@@ -1,0 +1,11 @@
+<div class="profile-content-container">
+    {{> profileAvatar}}
+    <div class="profile-content-cells">
+        {{#each cells}}
+            {{> cell}}
+        {{/each}}
+        <div class="profile-content-button-container">
+            {{> button variant="primary" label="Сохранить"}}
+        </div>    
+    </div>
+</div>

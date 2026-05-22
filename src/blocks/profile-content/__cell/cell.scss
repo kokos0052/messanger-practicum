@@ -1,0 +1,39 @@
+.profile-content__cell-container {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0px;
+  color: #1e1e1e;
+  font-size: 13px;
+}
+
+.profile-content__cell-button {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0px;
+  color: #ff0000;
+  font-size: 13px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.profile-content__cell-container-not-spasing {
+  padding: 0px 0px 10px 0px;
+}
+
+.profile-content__cell-with-border {
+  border-bottom: 1px solid #eaeaea;
+}
+
+.profile-content__cell-button-border {
+  color: #3369f3;
+  border-bottom: 1px solid #eaeaea;
+}
+
+.profile-content__cell-key {
+  margin: 0;
+}
+
+.profile-content__cell-value {
+  color: #999999;
+}

@@ -1,0 +1,30 @@
+{
+  "name": "messanger-praticum",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node app.cjs",
+    "lint": "eslint '**/*.{js,jsx,ts,tsx}' --cache",
+    "dev": "NODE_ENV=development nodemon app.cjs",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.5.0",
+    "eslint": "^10.2.1",
+    "nodemon": "^3.1.14",
+    "sass": "^1.99.0",
+    "typescript": "~6.0.2",
+    "vite": "^8.0.10"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "handlebars": "^4.7.9",
+    "http-proxy": "^1.18.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

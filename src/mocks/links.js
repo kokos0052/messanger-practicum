@@ -1,0 +1,16 @@
+export const links = [
+  { link: "login", name: "Login" },
+  { link: "signin", name: "Signin" },
+  { link: "500", name: "500" },
+  { link: "404", name: "404" },
+  { link: "chose-chat", name: "Выбрать чат" },
+  { link: "chat", name: "Чат" },
+  { link: "search", name: "Поиск" },
+  { link: "chat-fuction", name: "Функции чата" },
+  { link: "delete-user", name: "Добавить/удалить пользователя" },
+  { link: "profile", name: "Профиль" },
+  { link: "change-info", name: "Изменить данные" },
+  { link: "change-password", name: "Изменить пароль" },
+  { link: "new-avatar", name: "Новый аватар" },
+  { link: "download-new-avatar", name: "Загрузить новый аватар" },
+];

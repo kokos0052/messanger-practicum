@@ -1,0 +1,28 @@
+@use "./common.scss";
+
+@use "../blocks/button/button.scss";
+@use "../blocks/links/links.scss";
+@use "../blocks/form-input/input.scss";
+@use "../blocks/chat-pannel/chat-pannel.scss";
+@use "../blocks/chat-pannel/__chat-card/chat-card.scss";
+@use "../blocks/chat-pannel/__chat-card/__avatar/avatar.scss";
+@use "../blocks/chat-pannel/__chat-card/__chat-info/chat-info.scss";
+@use "../blocks/chat-pannel/__chat-search/chat-search.scss";
+@use "../blocks/choose-chat/choose-chat.scss";
+@use "../blocks/chat-window/chat-window.scss";
+@use "../blocks/chat-window/__chat-header/chat-header.scss";
+@use "../blocks/chat-window/__chat-input/chat-input.scss";
+@use "../blocks/chat-window/__chat-messages/chat-messages.scss";
+@use "../blocks/modal/modal.scss";
+@use "../blocks/back-pannel/back-pannel.scss";
+@use "../blocks/profile-content/profile-content.scss";
+@use "../blocks/profile-content/__avatar/profile-content__avatar.scss";
+@use "../blocks/profile-content/__cell/cell.scss";
+
+@use "../layouts/navigation/navigation.scss";
+@use "../layouts/auth/auth.scss";
+@use "../layouts/auth/__login/auth__login.scss";
+@use "../layouts/auth/__signin/auth__signin.scss";
+@use "../layouts/error/error.scss";
+@use "../layouts/chat/chat.scss";
+@use "../layouts/profile/profile.scss";

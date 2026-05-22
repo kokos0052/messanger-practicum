@@ -1,0 +1,36 @@
+.chat-pannel__chat-card__chat-info-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.chat-pannel__chat-card__chat-info-message-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.chat-pannel__chat-card__chat-info-title {
+  margin: 0;
+  padding: 0;
+  font-weight: 600;
+  color: #1e1e1e;
+  font-size: 13px;
+}
+
+.chat-pannel__chat-card__chat-info-message {
+  margin: 0;
+  padding: 0;
+  font-size: 12px;
+}
+
+.chat-card__chat-info-time {
+  margin: 0;
+  padding: 0;
+  color: #999999;
+  font-size: 12px;
+}
+
+.chat-pannel__chat-card__chat-info-text {
+  color: #999999;
+}

@@ -1,0 +1,19 @@
+.back-pannel {
+  background-color: #fbfbfb;
+  min-width: 64px;
+  border-right: 1px solid #eaeaea;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.back-pannel-button {
+  width: 32px;
+  height: 28px;
+  background-color: transparent;
+  transform: rotate(180deg);
+  border: none;
+  background: url("./send.svg") no-repeat center;
+  cursor: pointer;
+}
