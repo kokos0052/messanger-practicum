@@ -1,6 +1,6 @@
 export const links = [
   { link: "login", name: "Login" },
-  { link: "signin", name: "Signin" },
+  { link: "signup", name: "Signup" },
   { link: "500", name: "500" },
   { link: "404", name: "404" },
   { link: "chose-chat", name: "Выбрать чат" },

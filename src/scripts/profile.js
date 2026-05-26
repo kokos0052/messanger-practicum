@@ -16,4 +16,5 @@ Handlebars.registerPartial("cellButton", cellButtonTpl);
 document.body.innerHTML = Handlebars.compile(profileTpl)({
   ...profileInfo,
   profileContent: "primaryProfile",
+  disableInputs: true,
 });

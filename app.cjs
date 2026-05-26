@@ -10,7 +10,7 @@ const pages = [
   { url: "/404", file: "404.html", status: 404 },
   { url: "/500", file: "500.html", status: 500 },
   { url: "/login", file: "login.html" },
-  { url: "/signin", file: "signIn.html" },
+  { url: "/signup", file: "signUp.html" },
   { url: "/chose-chat", file: "choseChat.html" },
   { url: "/chat", file: "chat.html" },
   { url: "/search", file: "search.html" },

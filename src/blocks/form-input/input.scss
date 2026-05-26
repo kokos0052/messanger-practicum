@@ -6,7 +6,7 @@
   &__field {
     width: 100%;
     border: none;
-    border-bottom: 1px solid #3369f3;
+    border-bottom: 1px solid var(--primary-action-color);
     border-radius: 0;
     padding: 0.25rem 0; // минимальные отступы, чтобы текст ввода был у линии
     font-size: 1rem;

@@ -1,7 +1,7 @@
 .back-pannel {
-  background-color: #fbfbfb;
+  background-color: var(--secondary-background-color);
   min-width: 64px;
-  border-right: 1px solid #eaeaea;
+  border-right: 1px solid var(--background-secondary-color);
   height: 100%;
   display: flex;
   justify-content: center;
@@ -11,6 +11,7 @@
 .back-pannel-button {
   width: 32px;
   height: 28px;
+  position: relative;
   background-color: transparent;
   transform: rotate(180deg);
   border: none;

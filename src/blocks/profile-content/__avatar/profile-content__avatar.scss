@@ -11,12 +11,12 @@
   align-items: center;
   height: 130px;
   width: 130px;
-  background-color: #efefef;
+  background-color: var(--background-action-color);
   border-radius: 50%;
 }
 
 .profile-content__avatar-name {
-  color: #1e1e1e;
+  color: var(--primary-text-color);
   font-size: 16px;
   font-weight: 600;
   line-height: 16px;

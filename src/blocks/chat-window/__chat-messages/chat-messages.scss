@@ -2,12 +2,12 @@
   height: 100%;
   padding: 48px 0px 30px;
   text-align: center;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid var(--background-secondary-color);
   overflow: scroll;
 }
 
 .chat-window__chat-messages-date {
-  color: #999999;
+  color: var(--secondary-text-color);
   font-size: 12px;
   margin-bottom: 30px;
 }
@@ -34,7 +34,7 @@
   display: inline-block;
   padding: 11px;
   font-size: 12px;
-  color: #1e1e1e;
+  color: var(--primary-text-color);
   position: relative;
   line-height: 15px;
   max-width: 380px;
@@ -45,7 +45,7 @@
 }
 
 .chat-window__chat-messages-own-message {
-  background-color: #e4edfd;
+  background-color: var(--background-input-color);
 }
 
 .chat-window__chat-messages-other-message {
@@ -72,9 +72,9 @@
 }
 
 .chat-window__chat-messages-own-time {
-  color: #3369f3;
+  color: var(--primary-action-color);
 }
 
 .chat-window__chat-messages-other-time {
-  color: #999999;
+  color: var(--ssecondary-text-color);
 }

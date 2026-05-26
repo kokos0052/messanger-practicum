@@ -3,7 +3,7 @@
   position: relative;
   align-items: center;
   gap: 10px;
-  border-bottom: 1px solid #eaeaea;
+  border-bottom: 1px solid var(--background-secondary-color);
   padding: 12px 0px;
   margin: 0px 10px;
   cursor: pointer;
@@ -18,8 +18,8 @@
   right: 0px;
   height: 20px;
   width: 20px;
-  color: #ffffff;
-  background-color: #3369f3;
+  color: var(--primary-backgroud-color);
+  background-color: var(--primary-action-color);
   font-size: 11px;
   border-radius: 50%;
 }

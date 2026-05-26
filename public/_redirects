@@ -1,5 +1,5 @@
 # Делаем чистые URL для всех страниц
-/signIn          /src/pages/signIn.html           200
+/signUp          /src/pages/signUp.html           200
 /changeInfo      /src/pages/changeInfo.html       200
 /changePassword  /src/pages/changePassword.html   200
 /chat            /src/pages/chat.html             200
