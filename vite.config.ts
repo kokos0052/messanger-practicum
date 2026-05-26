@@ -16,7 +16,7 @@ export default defineConfig({
         changeInfo: resolve(__dirname, "src/pages/changeInfo.html"),
         changePassword: resolve(__dirname, "src/pages/changePassword.html"),
         chat: resolve(__dirname, "src/pages/chat.html"),
-        chatFuctions: resolve(__dirname, "src/pages/chatFunctions.html"),
+        chatFunctions: resolve(__dirname, "src/pages/chatFunctions.html"),
         choseChat: resolve(__dirname, "src/pages/choseChat.html"),
         deleteUset: resolve(__dirname, "src/pages/deleteUser.html"),
         downloadNewAvatar: resolve(
@@ -27,7 +27,7 @@ export default defineConfig({
         newAvatar: resolve(__dirname, "src/pages/newAvatar.html"),
         profile: resolve(__dirname, "src/pages/profile.html"),
         search: resolve(__dirname, "src/pages/search.html"),
-        signIn: resolve(__dirname, "src/pages/signIn.html"),
+        signUp: resolve(__dirname, "src/pages/signUp.html"),
       },
     },
   },
