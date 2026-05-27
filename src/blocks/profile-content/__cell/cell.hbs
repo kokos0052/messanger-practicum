@@ -1,4 +1,4 @@
 <div class="profile-content__cell-container{{#if @first}} profile-content__cell-container-not-spasing{{/if}}{{#unless @last}} profile-content__cell-with-border{{/unless}}">
-    <lable class="profile-content__cell-key" for={{cellId}} >{{cellKey}}</lable>
+    <label class="profile-content__cell-key" for={{cellId}} >{{cellKey}}</label>
     <input id={{cellId}} class="profile-content__cell-value" placeholder={{cellValue}} type={{cellType}} name={{cellName}} {{#if disableInputs}}disabled{{/if}} />
 </div>
