@@ -1,0 +1,9 @@
+<div class="chat-pannel__chat-card-container">
+{{> avatar}}
+{{> chatInfo }}
+    {{#if unreadMessagesCount}}
+        <div class="chat-pannel__chat-card-unread-count">
+            {{unreadMessagesCount}}
+        </div>
+    {{/if}}
+</div>

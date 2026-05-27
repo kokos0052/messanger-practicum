@@ -1,0 +1,24 @@
+.profile-content__avatar-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 21px;
+}
+
+.profile-content__avatar-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 130px;
+  width: 130px;
+  background-color: var(--background-action-color);
+  border-radius: 50%;
+}
+
+.profile-content__avatar-name {
+  color: var(--primary-text-color);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 16px;
+  margin: 0;
+}
