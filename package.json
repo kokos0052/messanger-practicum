@@ -7,15 +7,23 @@
     "start": "node app.cjs",
     "lint": "eslint '**/*.{js,jsx,ts,tsx}' --cache",
     "dev": "NODE_ENV=development nodemon app.cjs",
-    "build": "vite build",
+    "build": "tsc --noEmit && vite build",
     "preview": "vite preview"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "autoprefixer": "^10.5.0",
-    "eslint": "^10.2.1",
+    "eslint": "^10.4.1",
+    "globals": "^17.6.0",
     "nodemon": "^3.1.14",
+    "prettier": "3.8.3",
     "sass": "^1.99.0",
+    "stylelint": "^17.12.0",
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-config-standard-scss": "^17.0.0",
+    "ts-node": "^10.9.2",
     "typescript": "~6.0.2",
+    "typescript-eslint": "^8.60.1",
     "vite": "^8.0.10"
   },
   "dependencies": {

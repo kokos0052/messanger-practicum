@@ -1,0 +1,75 @@
+export const profileInfo = {
+  userName: 'Иван',
+  cells: [
+    {
+      cellKey: 'Почта',
+      cellValue: 'pochta@yandex.ru',
+      cellId: 'info_mail',
+      cellType: 'text',
+      cellName: 'email',
+    },
+    {
+      cellKey: 'Логин',
+      cellValue: 'ivanivanov',
+      cellId: 'info_login',
+      cellType: 'text',
+      cellName: 'login',
+    },
+    {
+      cellKey: 'Имя',
+      cellValue: 'Иван',
+      cellId: 'info_name',
+      cellType: 'text',
+      cellName: 'first_name',
+    },
+    {
+      cellKey: 'Фамилия',
+      cellValue: 'Иванов',
+      cellId: 'info_second_name',
+      cellType: 'text',
+      cellName: 'second_name',
+    },
+    {
+      cellKey: 'Имя в чате',
+      cellValue: 'Иван',
+      cellId: 'info_nickname',
+      cellType: 'text',
+      cellName: 'display_name',
+    },
+    {
+      cellKey: 'Телефон',
+      cellValue: '+7(909)9673030',
+      cellId: 'info_phone',
+      cellType: 'text',
+      cellName: 'phone',
+    },
+  ],
+  cellButtons: [
+    { actionName: 'Изменить данные', actionLink: '/changeInfo' },
+    { actionName: 'Изменить пароль', actionLink: '/changePassword' },
+    { actionName: 'Выйти', actionLink: '#' },
+  ],
+  passwordCells: [
+    {
+      cellKey: 'Старый пароль',
+      cellValue: '•••••••••',
+      cellId: 'info_old_password',
+      cellType: 'password',
+      cellName: 'old_password',
+    },
+    {
+      cellKey: 'Новый пароль',
+      cellValue: '•••••••••••',
+      cellId: 'info_new_password',
+      cellType: 'password',
+      cellName: 'new_password',
+    },
+    {
+      cellKey: 'Повторите новый пароль',
+      cellValue: '•••••••••••',
+      cellId: 'info_new_password_again',
+      cellType: 'password',
+      cellName: 'new_password_again',
+    },
+  ],
+}

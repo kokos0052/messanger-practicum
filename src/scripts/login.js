@@ -1,13 +1,7 @@
-import Handlebars from "handlebars";
-import buttonTpl from "../blocks/button/button.hbs?raw";
-import fieldTpl from "../blocks/form-input/input.hbs?raw";
-import authTpl from "../layouts/auth/auth.hbs?raw";
-import loginTpl from "../layouts/auth/__login/auth__login.hbs?raw";
+import { AuthBlock } from '../layouts/auth/auth'
 
-Handlebars.registerPartial("button", buttonTpl);
-Handlebars.registerPartial("field", fieldTpl);
-Handlebars.registerPartial("loginForm", loginTpl);
+const authPage = new AuthBlock({
+  formType: 'loginForm',
+})
 
-document.body.innerHTML = Handlebars.compile(authTpl)({
-  formType: "loginForm",
-});
+document.body.appendChild(authPage.element())
