@@ -9,4 +9,6 @@ export type TCellBlockProps = {
 export type TCellButtonProps = {
   actionName: string
   actionLink: string
+  isFirst: boolean
+  isLast: boolean
 }

@@ -31,7 +31,7 @@
   border: none;
   border-radius: 50%;
   z-index: 10;
-  background: url("./options.svg") no-repeat center;
+  background: url('./options.svg') no-repeat center;
   cursor: pointer;
 }
 
@@ -59,4 +59,8 @@
 .chat-window__chat-header-options__list-element-icon {
   height: 22px;
   width: 22px;
+}
+
+.chat-window__chat-header-options__list-element-text {
+  cursor: pointer;
 }

@@ -58,8 +58,12 @@ export class ProfileContentBlock extends Block<TProfileContentProps> {
           ))}
         </div>
         <div class="profile-content-cells">
-          {profileInfo.cellButtons.map((cellButton) => (
-            <CellButton {...cellButton} />
+          {profileInfo.cellButtons.map((cellButton, index) => (
+            <CellButton
+              {...cellButton}
+              isFirst={index === 0}
+              isLast={index === profileInfo.cellButtons.length - 1}
+            />
           ))}
         </div>
       </section>

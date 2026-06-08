@@ -9,7 +9,7 @@ export class CellButtonBlock extends Block<TCellButtonProps> {
   render() {
     return (
       <button
-        class="profile-content__cell-button profile-content__cell-container-not-spasing profile-content__cell-button-border"
+        class={`profile-content__cell-button ${this.props.isFirst ? 'profile-content__cell-container-not-spasing' : ''} ${this.props.isLast ? '' : 'profile-content__cell-button-border'}`}
         onClick={() => goToLink(this.props.actionLink)}
       >
         <p class="profile-content__cell-key">{this.props.actionName}</p>

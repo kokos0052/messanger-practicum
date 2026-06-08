@@ -19,6 +19,7 @@ export class AuthBlock extends Block<TAuthProps> {
               id="password"
               name="password"
               label="Пароль"
+              validators={[{ minLength: 6 }]}
             />
             <div class="button-container button-container-auth__login">
               <Button variant="primary" label="Авторизоваться" />

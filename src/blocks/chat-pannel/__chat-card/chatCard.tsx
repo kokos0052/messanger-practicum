@@ -13,7 +13,7 @@ export class ChatCardBlock extends Block<TChatCardProps> {
           message={this.props.message}
           sendAt={this.props.sendAt}
         />
-        {this.props.unreadMessagesCount && (
+        {Boolean(this.props.unreadMessagesCount) && (
           <div class="chat-pannel__chat-card-unread-count">
             {this.props.unreadMessagesCount}
           </div>

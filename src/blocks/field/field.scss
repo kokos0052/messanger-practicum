@@ -1,48 +1,62 @@
 .form-input {
-  position: relative;
   width: 100%;
   padding-top: 2rem;
+}
 
-  &__field {
-    width: 100%;
-    border: none;
-    border-bottom: 1px solid var(--primary-action-color);
-    border-radius: 0;
-    padding: 0.25rem 0; // минимальные отступы, чтобы текст ввода был у линии
-    font-size: 1rem;
-    line-height: 1.5;
-    background: transparent;
-    outline: none;
-    transition: border-color 0.2s;
+.form-input__field-wrapper {
+  position: relative;
+  width: 100%;
+}
 
-    // Скрываем пробел-плейсхолдер
-    &::placeholder {
-      color: transparent;
-      user-select: none;
-    }
+.form-input__field {
+  width: 100%;
+  border: none;
+  border-bottom: 1px solid var(--primary-action-color);
+  border-radius: 0;
+  padding: 0.25rem 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  background: transparent;
+  outline: none;
+  transition: border-color 0.2s;
+}
 
-    &:disabled {
-      border-bottom-style: dashed;
-      color: #999;
-      background: transparent;
-    }
-  }
+.form-input__field::placeholder {
+  color: transparent;
+  user-select: none;
+}
 
-  &__label {
-    position: absolute;
-    left: 0;
-    bottom: 8px;
-    font-size: 1rem;
-    color: #999;
-    pointer-events: none;
-    transform-origin: left bottom;
-    transition: all 0.2s ease;
-    line-height: 1;
-    white-space: nowrap;
-  }
+.form-input__field:disabled {
+  border-bottom-style: dashed;
+  color: #999;
+  background: transparent;
+}
 
-  &__field:focus + &__label,
-  &__field:not(:placeholder-shown) + &__label {
-    transform: translateY(-28px) scale(0.75);
-  }
+.form-input__label {
+  position: absolute;
+  left: 0;
+  bottom: 8px;
+  font-size: 1rem;
+  color: #999;
+  pointer-events: none;
+  transform-origin: left bottom;
+  transition: all 0.2s ease;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.form-input__field:focus + .form-input__label,
+.form-input__field:not(:placeholder-shown) + .form-input__label {
+  transform: translateY(-28px) scale(0.75);
+}
+
+.form-input__error {
+  font-size: 8px;
+  font-weight: 400;
+  color: var(--error-color);
+  margin-top: 2px;
+  position: absolute;
+  bottom: -18px;
+  left: 0;
+  margin: 0;
 }
