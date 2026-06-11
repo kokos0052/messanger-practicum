@@ -1,0 +1,16 @@
+export const links = [
+  { link: '/login', name: 'Login' },
+  { link: '/signUp', name: 'Signup' },
+  { link: '/500', name: '500' },
+  { link: '/404', name: '404' },
+  { link: '/choseChat', name: 'Выбрать чат' },
+  { link: '/chat', name: 'Чат' },
+  { link: '/search', name: 'Поиск' },
+  { link: '/chatFunctions', name: 'Функции чата' },
+  { link: '/deleteUser', name: 'Добавить/удалить пользователя' },
+  { link: '/profile', name: 'Профиль' },
+  { link: '/changeInfo', name: 'Изменить данные' },
+  { link: '/changePassword', name: 'Изменить пароль' },
+  { link: '/newAvatar', name: 'Новый аватар' },
+  { link: '/downloadNewAvatar', name: 'Загрузить новый аватар' },
+]
