@@ -1,21 +1,33 @@
 import { h, Block } from '../../../core/index'
+import { formatMessageDate } from '../utils'
 import { ChatInfo } from './__chat-info/chatInfo'
 import { TChatCardProps } from './types'
 
 export class ChatCardBlock extends Block<TChatCardProps> {
   render() {
     return (
-      <div class="chat-pannel__chat-card-container">
+      <div
+        class="chat-pannel__chat-card-container"
+        onClick={() => this.props.onClick()}
+      >
         <div class="chat-pannel__chat-card__avatar"></div>
         <ChatInfo
-          chatName={this.props.chatName}
-          isOwnMessage={this.props.isOwnMessage}
-          message={this.props.message}
-          sendAt={this.props.sendAt}
+          chatName={this.props.title}
+          isOwnMessage={false}
+          message={
+            this.props?.last_message?.content
+              ? this.props?.last_message?.content
+              : ''
+          }
+          sendAt={
+            this.props.last_message?.time
+              ? formatMessageDate(this.props.last_message?.time)
+              : ''
+          }
         />
-        {Boolean(this.props.unreadMessagesCount) && (
+        {Boolean(this.props.unread_count) && (
           <div class="chat-pannel__chat-card-unread-count">
-            {this.props.unreadMessagesCount}
+            {this.props.unread_count}
           </div>
         )}
       </div>

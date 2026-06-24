@@ -5,3 +5,29 @@
   height: 100%;
   overflow: scroll;
 }
+
+.chat-panner-havent-chats {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 12px;
+  color: var(--secondary-text-color);
+}
+
+.chat-panner-add-chat-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 20px;
+  width: 20px;
+  color: var(--primary-backgroud-color);
+  background-color: var(--primary-action-color);
+  font-size: 11px;
+  border-radius: 50%;
+  border: none;
+  padding: 0;
+  margin: 0;
+}

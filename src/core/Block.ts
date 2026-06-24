@@ -11,12 +11,26 @@ export abstract class Block<
   protected props = {} as Props
   protected state = {} as State
 
-  private domElement: HTMLElement | null = null
+  public domElement: HTMLElement | null = null
+  private _isMounted = false
 
   protected events: EventListType = {}
 
   constructor(props: Props = {} as Props) {
     this.props = props
+  }
+
+  public destroy(): void {
+    if (!this.domElement) return
+
+    if (this._isMounted) {
+      this.componentWillUnmount()
+      this._isMounted = false
+    }
+
+    this.removeListeners()
+    this.domElement.remove()
+    this.domElement = null
   }
 
   public element(): HTMLElement {
@@ -37,16 +51,22 @@ export abstract class Block<
   }
 
   private _createDomElement() {
-    this.unmountComponent()
+    this.removeListeners()
     const fragment = this.compile()
     if (this.domElement && fragment) {
       this.domElement.replaceWith(fragment)
     }
     this.domElement = fragment
-    this.mountComponent()
+    this.attachListeners()
+
+    if (!this._isMounted) {
+      this._isMounted = true
+      this.componentDidMount()
+    }
   }
 
   protected renderComponent() {
+    if (!this.domElement) return
     this._createDomElement()
   }
 
@@ -68,19 +88,7 @@ export abstract class Block<
 
   protected componentDidMount() {}
 
-  private mountComponent() {
-    this.attachListeners()
-    this.componentDidMount()
-  }
-
   protected componentWillUnmount() {}
-
-  private unmountComponent() {
-    if (this.domElement) {
-      this.componentWillUnmount()
-      this.removeListeners()
-    }
-  }
 
   private attachListeners() {
     for (const eventName in this.events) {
@@ -102,3 +110,5 @@ export abstract class Block<
     }
   }
 }
+
+export type AnyBlockInstanse = InstanceType<typeof Block>

@@ -1,4 +1,4 @@
-import { h, Block, Fragment } from '../../../../core/index'
+import { h, Block, Fragment } from '@core/index'
 import { TChatInfoProps } from './types'
 
 export class ChatInfoBlock extends Block<TChatInfoProps> {

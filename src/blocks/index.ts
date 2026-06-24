@@ -1,6 +1,5 @@
 export * from './button'
 export * from './field'
-export * from './links'
 export * from './chat-pannel'
 export * from './choose-chat'
 export * from './chat-window'

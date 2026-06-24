@@ -45,9 +45,9 @@ export const profileInfo = {
     },
   ],
   cellButtons: [
-    { actionName: 'Изменить данные', actionLink: '/changeInfo' },
-    { actionName: 'Изменить пароль', actionLink: '/changePassword' },
-    { actionName: 'Выйти', actionLink: '#' },
+    { actionName: 'Изменить данные' },
+    { actionName: 'Изменить пароль' },
+    { actionName: 'Выйти' },
   ],
   passwordCells: [
     {

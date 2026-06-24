@@ -4,11 +4,12 @@ export type TCellBlockProps = {
   cellValue: string
   cellType: string
   cellName: string
+  isActive?: boolean
 }
 
 export type TCellButtonProps = {
   actionName: string
-  actionLink: string
   isFirst: boolean
   isLast: boolean
+  action: () => void
 }

@@ -1,4 +1,4 @@
-import { h, Block } from '../../core/index'
+import { h, Block } from '@core/index'
 
 export class ChooseChatBlock extends Block<{}> {
   render() {

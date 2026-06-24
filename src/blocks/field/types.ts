@@ -1,3 +1,5 @@
+import { Store } from '@shared/store'
+
 type ValidationRule = {
   required?: boolean
   minLength?: number
@@ -16,4 +18,5 @@ export type TFieldProps = {
   onBlur?: (e: Event) => void
   validators?: ValidationRule[]
   errorText?: string
+  store?: Store
 }

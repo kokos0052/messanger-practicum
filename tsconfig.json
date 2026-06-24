@@ -19,7 +19,15 @@
     "jsx": "react",
     "jsxFactory": "h",
     "strictNullChecks": true,
-    "jsxFragmentFactory": "Fragment"
+    "jsxFragmentFactory": "Fragment",
+    "paths": {
+      "@core/*": ["./src/core/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@blocks/*": ["./src/blocks/*"],
+      "@layouts/*": ["./src/layouts/*"],
+      "@mocks/*": ["./src/mocks/*"],
+      "@pages/*": ["./src/pages/*"]
+    }
   },
   "include": [
     "src/**/*.ts",

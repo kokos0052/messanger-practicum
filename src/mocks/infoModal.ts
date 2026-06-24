@@ -1,5 +1,6 @@
 export const infoModal = {
-  modalTitle: "Загрузите файл",
-  buttonText: "Поменять",
-  link: "Выбрать файл на компьютере",
-};
+  modalTitle: 'Загрузите файл',
+  buttonText: 'Поменять',
+  link: 'Выбрать файл на компьютере',
+  variant: 'file' as const,
+}

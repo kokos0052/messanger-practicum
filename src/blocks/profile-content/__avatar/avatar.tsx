@@ -1,5 +1,6 @@
-import { h, Block } from '../../../core/index'
+import { h, Block } from '@core/index'
 import { TAvatarProps } from './types'
+import AvatarImage from './avatar.png'
 
 export class AvatarBlock extends Block<TAvatarProps> {
   render() {
@@ -9,7 +10,7 @@ export class AvatarBlock extends Block<TAvatarProps> {
           class="profile-content__avatar-image"
           onClick={this.props.onChangeAvatar}
         >
-          <img src="./avatar.png" alt="Аватар пользователя" />
+          <img src={AvatarImage} alt="Аватар пользователя" />
         </div>
         <h4 class="profile-content__avatar-name">{this.props.userName}</h4>
       </div>

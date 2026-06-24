@@ -5,6 +5,7 @@ export class ButtonBlock extends Block<TButtonProps> {
   render() {
     return (
       <button
+        type={this.props.type}
         class={`btn btn-${this.props.variant}`}
         onClick={this.props.onClick}
       >

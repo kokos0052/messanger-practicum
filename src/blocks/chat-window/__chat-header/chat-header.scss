@@ -59,6 +59,8 @@
 .chat-window__chat-header-options__list-element-icon {
   height: 22px;
   width: 22px;
+  border-radius: 50%;
+  border: 1.5px solid var(--primary-action-color);
 }
 
 .chat-window__chat-header-options__list-element-text {

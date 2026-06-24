@@ -1,10 +1,12 @@
-import { h, Block } from '../../core'
+import { h, Block } from '@core/index'
 import { TFieldProps } from './types'
 
 export class FiledBlock extends Block<
   TFieldProps,
   { value: string; error: string | null }
 > {
+  private unsubscribeFromStore?: () => void
+
   constructor(props: TFieldProps = {} as TFieldProps) {
     const defaults = {
       onChange: null,
@@ -15,6 +17,26 @@ export class FiledBlock extends Block<
     this.state = {
       value: props.value || '',
       error: null,
+    }
+  }
+
+  protected componentDidMount() {
+    if (this.props.store) {
+      this.unsubscribeFromStore = this.props.store.subscribe(this.onStoreChange)
+    }
+  }
+
+  protected componentWillUnmount() {
+    this.unsubscribeFromStore?.()
+  }
+
+  private onStoreChange = () => {
+    if (!this.props.store) return
+    const storeValue = this.props.store.getState()[this.props.name] as
+      | string
+      | undefined
+    if (storeValue !== undefined && storeValue !== this.state.value) {
+      this.setState((prev) => ({ ...prev, value: storeValue }))
     }
   }
 
@@ -75,7 +97,9 @@ export class FiledBlock extends Block<
     const input = e.target as HTMLInputElement
     const newValue = input.value
 
-    this.setState((prevState) => ({ ...prevState, value: newValue }))
+    this.setState((prev) => ({ ...prev, value: newValue }))
+
+    this.props.store?.setState(this.props.name, newValue)
 
     if (typeof this.props.onChange === 'function') {
       this.props.onChange(e)
@@ -85,7 +109,6 @@ export class FiledBlock extends Block<
   private onBlur = (e: Event) => {
     const error = this.validate(this.state.value)
     this.setState((prevState) => ({ ...prevState, error }))
-    console.log(this.state, `state`)
 
     if (typeof this.props.onBlur === 'function') {
       this.props.onBlur(e)

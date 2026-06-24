@@ -1,12 +1,25 @@
-import { h, Block } from '../../core/index'
+import { h, Block } from '@core/index'
 import { ChatHeader } from './__chat-header/chatHeader'
 import { ChatInput } from './__chat-input/chatInput'
 import { ChatMessages } from './__chat-messages/ChatMessages'
-import { chatInfo } from '../../mocks/chatInfo'
+import { chatInfo } from '@mocks/chatInfo'
 import { TChatWindowProps } from './types'
 
-export class ChatWindowBlock extends Block<TChatWindowProps> {
+export class ChatWindowBlock extends Block<
+  TChatWindowProps,
+  { isLoading: boolean }
+> {
+  constructor(props: TChatWindowProps) {
+    super(props)
+
+    this.state = { isLoading: false }
+  }
+
   render() {
+    if (this.state.isLoading) {
+      return <section class="chat-window-loader">Загрузка...</section>
+    }
+
     return (
       <section class="chat-window">
         <ChatHeader
