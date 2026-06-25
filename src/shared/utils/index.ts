@@ -1,4 +1,5 @@
 export { isEqual } from './isEqual'
 export { render } from './render'
 export { goToLink } from './goToLink'
+export { deleteCookie, deleteAuthCookies } from './cookies'
 export type * from './types'

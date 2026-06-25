@@ -9,8 +9,8 @@ import ErrorPage from '@pages/ErrorPage'
 const rootQuery = '#root'
 const router = new Router(rootQuery)
 
-router.use<TAuthProps>('/', AuthPage, { formType: 'loginForm' })
-router.use<TAuthProps>('/sign-up', AuthPage, { formType: 'signupForm' })
+router.guestUse<TAuthProps>('/', AuthPage, { formType: 'loginForm' })
+router.guestUse<TAuthProps>('/sign-up', AuthPage, { formType: 'signupForm' })
 router.protectedUse('/settings', ProfilePage)
 router.protectedUse('/messenger', ChatPage)
 router.use<TErrorProps>('/404', ErrorPage, {

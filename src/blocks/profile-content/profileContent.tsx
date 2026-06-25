@@ -1,7 +1,9 @@
 import { h, Block } from '@core/index'
 import { Button } from '@blocks/index'
 import userApi from '@shared/api/userApi'
-import { goToLink } from '@shared/utils'
+import authApi from '@shared/api/authApi'
+import Store from '@shared/store/store'
+import { deleteAuthCookies, goToLink } from '@shared/utils'
 import { profileInfo } from '@mocks/profileInfo'
 import { Avatar } from './__avatar/avatar'
 import { Cell } from './__cell/cell'
@@ -20,7 +22,7 @@ export class ProfileContentBlock extends Block<
     this.cellButtonActions = [
       () => this.setProfileType(EProfileTypes.CHANGE_INFO),
       () => this.setProfileType(EProfileTypes.PASSWORD),
-      () => goToLink('/'),
+      this.logout,
     ]
   }
 
@@ -90,6 +92,18 @@ export class ProfileContentBlock extends Block<
 
   private setProfileType = (type: EProfileTypes) => {
     this.setState((prevState) => ({ ...prevState, profileType: type }))
+  }
+
+  private logout = async () => {
+    try {
+      await authApi.logout()
+    } catch (error) {
+      console.error('Ошибка выхода:', error)
+    } finally {
+      deleteAuthCookies()
+      Store.setState('user', null)
+      goToLink('/')
+    }
   }
 
   private handleSubmit = async (e: Event) => {

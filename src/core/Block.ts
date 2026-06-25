@@ -53,9 +53,15 @@ export abstract class Block<
   private _createDomElement() {
     this.removeListeners()
     const fragment = this.compile()
+
     if (this.domElement && fragment) {
-      this.domElement.replaceWith(fragment)
+      const parent = this.domElement.parentNode
+
+      if (parent) {
+        parent.replaceChild(fragment, this.domElement)
+      }
     }
+
     this.domElement = fragment
     this.attachListeners()
 

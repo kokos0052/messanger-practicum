@@ -1,8 +1,9 @@
-// Router.ts
 import authApi from '@shared/api/authApi'
 import { Route } from './Route'
 import type { TBlockConstructor } from './types'
 import Store from '@shared/store/store'
+
+const PUBLIC_ERROR_PAGES = new Set(['/404', '/500'])
 
 export class Router {
   private static __instance: Router | null = null
@@ -11,6 +12,7 @@ export class Router {
   private _currentRoute: Route | null = null
   private _rootQuery: string = ''
   private _protectedPaths: Set<string> = new Set()
+  private _guestPaths: Set<string> = new Set()
   private _isChecking: boolean = false
 
   constructor(rootQuery: string) {
@@ -41,6 +43,15 @@ export class Router {
     return this.use(pathname, block, blockProps)
   }
 
+  public guestUse<PropsType>(
+    pathname: string,
+    block: TBlockConstructor,
+    blockProps?: PropsType
+  ): this {
+    this._guestPaths.add(pathname)
+    return this.use(pathname, block, blockProps)
+  }
+
   public start(): void {
     window.onpopstate = () => {
       this._onRoute(window.location.pathname)
@@ -58,19 +69,13 @@ export class Router {
     this._isChecking = true
 
     try {
-      if (this._protectedPaths.has(pathname)) {
-        try {
-          const response = await authApi.getUser()
-          Store.setState('user', response)
-        } catch (err) {
-          this.history.replaceState({}, '', '/')
-          const login = this.getRoute('/')
-          if (login) {
-            this._currentRoute = login
-            login.render()
-          }
-
-          return
+      if (!PUBLIC_ERROR_PAGES.has(pathname)) {
+        if (this._protectedPaths.has(pathname)) {
+          const isAuthorized = await this._checkProtectedAccess()
+          if (!isAuthorized) return
+        } else if (this._guestPaths.has(pathname)) {
+          const isRedirected = await this._checkGuestAccess()
+          if (isRedirected) return
         }
       }
 
@@ -92,6 +97,42 @@ export class Router {
       route.render()
     } finally {
       this._isChecking = false
+    }
+  }
+
+  private async _checkProtectedAccess(): Promise<boolean> {
+    try {
+      const response = await authApi.getUser()
+      Store.setState('user', response)
+      return true
+    } catch (err) {
+      this.history.replaceState({}, '', '/')
+      const login = this.getRoute('/')
+      if (login) {
+        this._currentRoute = login
+        login.render()
+      }
+
+      return false
+    }
+  }
+
+  private async _checkGuestAccess(): Promise<boolean> {
+    try {
+      const response = await authApi.getUser()
+      Store.setState('user', response)
+
+      this.history.replaceState({}, '', '/messenger')
+      const messenger = this.getRoute('/messenger')
+      if (messenger) {
+        if (this._currentRoute) this._currentRoute.leave()
+        this._currentRoute = messenger
+        messenger.render()
+      }
+
+      return true
+    } catch (err) {
+      return false
     }
   }
 

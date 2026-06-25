@@ -50,7 +50,8 @@ export class FiledBlock extends Block<
             type={this.props.type}
             name={this.props.name}
             value={this.state.value}
-            onChange={this.onChange}
+            onInput={this.onInput}
+            onChange={this.onInput}
             onBlur={this.onBlur}
             placeholder=" "
           />
@@ -93,12 +94,11 @@ export class FiledBlock extends Block<
     return null
   }
 
-  private onChange = (e: Event) => {
+  private onInput = (e: Event) => {
     const input = e.target as HTMLInputElement
     const newValue = input.value
 
-    this.setState((prev) => ({ ...prev, value: newValue }))
-
+    this.state.value = newValue
     this.props.store?.setState(this.props.name, newValue)
 
     if (typeof this.props.onChange === 'function') {
@@ -107,8 +107,15 @@ export class FiledBlock extends Block<
   }
 
   private onBlur = (e: Event) => {
-    const error = this.validate(this.state.value)
-    this.setState((prevState) => ({ ...prevState, error }))
+    const input = e.target as HTMLInputElement
+    const value = input.value
+    const error = this.validate(value)
+
+    this.state.value = value
+
+    if (error !== this.state.error) {
+      this.setState({ error })
+    }
 
     if (typeof this.props.onBlur === 'function') {
       this.props.onBlur(e)
