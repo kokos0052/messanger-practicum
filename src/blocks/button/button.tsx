@@ -1,4 +1,4 @@
-import { h, Block } from '../../core'
+import { h, Block } from '@core/index'
 import { TButtonProps } from './types'
 
 export class ButtonBlock extends Block<TButtonProps> {
@@ -7,6 +7,7 @@ export class ButtonBlock extends Block<TButtonProps> {
       <button
         type={this.props.type}
         class={`btn btn-${this.props.variant}`}
+        {...(this.props.disabled ? { disabled: true } : {})}
         onClick={this.props.onClick}
       >
         {this.props.label}

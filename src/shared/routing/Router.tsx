@@ -4,6 +4,7 @@ import type { TBlockConstructor } from './types'
 import Store from '@shared/store/store'
 
 const PUBLIC_ERROR_PAGES = new Set(['/404', '/500'])
+const MESSENGER_PATH = '/messenger'
 
 export class Router {
   private static __instance: Router | null = null
@@ -69,6 +70,8 @@ export class Router {
     this._isChecking = true
 
     try {
+      this.resetSelectedChatIfNeeded(pathname)
+
       if (!PUBLIC_ERROR_PAGES.has(pathname)) {
         if (this._protectedPaths.has(pathname)) {
           const isAuthorized = await this._checkProtectedAccess()
@@ -97,6 +100,14 @@ export class Router {
       route.render()
     } finally {
       this._isChecking = false
+    }
+  }
+
+  private resetSelectedChatIfNeeded(pathname: string): void {
+    if (pathname === MESSENGER_PATH) return
+
+    if (Store.getState().selectedChatId != null) {
+      Store.setState('selectedChatId', null)
     }
   }
 

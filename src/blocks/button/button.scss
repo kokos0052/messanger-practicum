@@ -33,6 +33,11 @@
     var(--primary-action-color),
     var(--primary-backgroud-color)
   );
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 }
 
 .btn-secondary {

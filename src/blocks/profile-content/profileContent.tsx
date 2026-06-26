@@ -3,8 +3,23 @@ import { Button } from '@blocks/index'
 import userApi from '@shared/api/userApi'
 import authApi from '@shared/api/authApi'
 import Store from '@shared/store/store'
-import { deleteAuthCookies, goToLink } from '@shared/utils'
-import { profileInfo } from '@mocks/profileInfo'
+import { TUser } from '@shared/types/user'
+import {
+  deleteAuthCookies,
+  goToLink,
+  isFormValid,
+  ValidationRule,
+} from '@shared/utils'
+import {
+  buildPasswordFormValues,
+  buildProfileCells,
+  buildProfileFormValues,
+  getPasswordFormFields,
+  getProfileFormFields,
+  getUserDisplayName,
+  passwordCells,
+  profileCellButtons,
+} from './constants'
 import { Avatar } from './__avatar/avatar'
 import { Cell } from './__cell/cell'
 import { CellButton } from './__cell/cellButton'
@@ -15,6 +30,8 @@ export class ProfileContentBlock extends Block<
   { profileType: EProfileTypes }
 > {
   private cellButtonActions
+  private formValues: Record<string, string> = {}
+  private lastFormValid = false
 
   constructor(props: TProfileContentProps) {
     super(props)
@@ -26,20 +43,100 @@ export class ProfileContentBlock extends Block<
     ]
   }
 
+  private getUser(): TUser {
+    return Store.getState().user as TUser
+  }
+
+  private getPasswordAgainValidators = (): ValidationRule[] => [
+    { required: true },
+    { minLength: 6 },
+    {
+      custom: (value) =>
+        value !== this.formValues.new_password ? 'Пароли не совпадают' : null,
+    },
+  ]
+
+  private checkFormValid(
+    profileType: EProfileTypes = this.state.profileType
+  ): boolean {
+    if (profileType === EProfileTypes.CHANGE_INFO) {
+      return isFormValid(this.formValues, getProfileFormFields())
+    }
+
+    if (profileType === EProfileTypes.PASSWORD) {
+      const baseValid = isFormValid(this.formValues, getPasswordFormFields())
+      return (
+        baseValid &&
+        this.formValues.new_password === this.formValues.new_password_again
+      )
+    }
+
+    return true
+  }
+
+  private handleCellChange = (name: string, value: string) => {
+    this.formValues[name] = value
+    this.updateSaveButtonState()
+  }
+
+  private updateSaveButtonState() {
+    const isValid = this.checkFormValid()
+    if (isValid === this.lastFormValid) return
+
+    this.lastFormValid = isValid
+
+    const btn = this.domElement?.querySelector(
+      '.profile-content-button-container button, .profile-content-password-button-container button'
+    ) as HTMLButtonElement | null
+
+    if (btn) {
+      btn.disabled = !isValid
+    }
+  }
+
+  private renderEditableCells(cells: ReturnType<typeof buildProfileCells>) {
+    return cells.map((cell) => (
+      <Cell {...cell} onChange={this.handleCellChange} />
+    ))
+  }
+
+  private renderPasswordCells() {
+    return passwordCells.map((cell) => (
+      <Cell
+        {...cell}
+        onChange={this.handleCellChange}
+        resolveValidators={
+          cell.cellName === 'new_password_again'
+            ? this.getPasswordAgainValidators
+            : undefined
+        }
+      />
+    ))
+  }
+
   render() {
+    const user = this.getUser()
+    const cells = buildProfileCells(user)
+    const userName = getUserDisplayName(user)
+    const isSaveDisabled = !this.checkFormValid()
+
     if (this.state.profileType === EProfileTypes.CHANGE_INFO) {
       return (
         <section class="profile-content-container">
           <Avatar
-            userName={profileInfo.userName}
+            userName={userName}
+            avatar={user.avatar}
             onChangeAvatar={this.props.onChangeAvatar}
           />
           <form class="profile-content-cells" onSubmit={this.handleSubmit}>
-            {profileInfo.cells.map((cell) => (
-              <Cell {...cell} />
-            ))}
+            {this.renderEditableCells(cells)}
             <div class="profile-content-button-container">
-              <Button variant="primary" label="Сохранить" type="submit" />
+              <Button
+                variant="primary"
+                label="Сохранить"
+                type="submit"
+                disabled={isSaveDisabled}
+              />
             </div>
           </form>
         </section>
@@ -50,15 +147,19 @@ export class ProfileContentBlock extends Block<
       return (
         <section class="profile-content-container">
           <Avatar
-            userName={profileInfo.userName}
+            userName={userName}
+            avatar={user.avatar}
             onChangeAvatar={this.props.onChangeAvatar}
           />
           <form class="profile-content-cells" onSubmit={this.handleSubmit}>
-            {profileInfo.passwordCells.map((cell) => (
-              <Cell {...cell} />
-            ))}
+            {this.renderPasswordCells()}
             <div class="profile-content-password-button-container">
-              <Button variant="primary" label="Сохранить" type="submit" />
+              <Button
+                variant="primary"
+                label="Сохранить"
+                type="submit"
+                disabled={isSaveDisabled}
+              />
             </div>
           </form>
         </section>
@@ -68,20 +169,21 @@ export class ProfileContentBlock extends Block<
     return (
       <section class="profile-content-container">
         <Avatar
-          userName={profileInfo.userName}
+          userName={userName}
+          avatar={user.avatar}
           onChangeAvatar={this.props.onChangeAvatar}
         />
         <div class="profile-content-cells">
-          {profileInfo.cells.map((cell) => (
+          {cells.map((cell) => (
             <Cell {...cell} isActive={false} />
           ))}
         </div>
         <div class="profile-content-cells">
-          {profileInfo.cellButtons.map((cellButton, index) => (
+          {profileCellButtons.map((cellButton, index) => (
             <CellButton
               {...cellButton}
               isFirst={index === 0}
-              isLast={index === profileInfo.cellButtons.length - 1}
+              isLast={index === profileCellButtons.length - 1}
               action={this.cellButtonActions[index]}
             />
           ))}
@@ -91,7 +193,16 @@ export class ProfileContentBlock extends Block<
   }
 
   private setProfileType = (type: EProfileTypes) => {
-    this.setState((prevState) => ({ ...prevState, profileType: type }))
+    if (type === EProfileTypes.CHANGE_INFO) {
+      this.formValues = buildProfileFormValues(this.getUser())
+    } else if (type === EProfileTypes.PASSWORD) {
+      this.formValues = buildPasswordFormValues()
+    } else {
+      this.formValues = {}
+    }
+
+    this.lastFormValid = this.checkFormValid(type)
+    this.setState({ profileType: type })
   }
 
   private logout = async () => {
@@ -109,30 +220,21 @@ export class ProfileContentBlock extends Block<
   private handleSubmit = async (e: Event) => {
     e.preventDefault()
 
-    const form = e.currentTarget as HTMLFormElement
-    const formData = new FormData(form)
-    const data: Record<string, string> = {}
-
-    formData.forEach((value, key) => {
-      data[key] = value.toString()
-    })
+    if (!this.checkFormValid()) return
 
     try {
       if (this.state.profileType === EProfileTypes.CHANGE_INFO) {
-        await userApi.unpdateProfile(data)
+        await userApi.unpdateProfile(this.formValues)
+        const response = await authApi.getUser()
+        Store.setState('user', response)
         this.setProfileType(EProfileTypes.DEFAULT)
         return
       }
 
       if (this.state.profileType === EProfileTypes.PASSWORD) {
-        if (data.new_password !== data.new_password_again) {
-          alert('Пароли не совпадают')
-          return
-        }
-
         await userApi.changePassword({
-          oldPassword: data.old_password,
-          newPassword: data.new_password,
+          oldPassword: this.formValues.old_password,
+          newPassword: this.formValues.new_password,
         })
         this.setProfileType(EProfileTypes.DEFAULT)
       }

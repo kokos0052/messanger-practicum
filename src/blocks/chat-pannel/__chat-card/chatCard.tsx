@@ -7,7 +7,9 @@ export class ChatCardBlock extends Block<TChatCardProps> {
   render() {
     return (
       <div
-        class="chat-pannel__chat-card-container"
+        class={`chat-pannel__chat-card-container${
+          this.props.isActive ? ' chat-pannel__chat-card-container_active' : ''
+        }`}
         onClick={() => this.props.onClick()}
       >
         <div class="chat-pannel__chat-card__avatar"></div>

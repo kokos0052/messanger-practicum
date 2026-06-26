@@ -9,11 +9,19 @@ export function h(
   const el = document.createElement(type)
   if (props) {
     for (const [key, val] of Object.entries(props)) {
+      if (val === null || val === undefined) continue
+
       if (key.startsWith('on') && typeof val === 'function') {
         const eventName = key.slice(2).toLowerCase()
         el.addEventListener(eventName, val)
       } else if (key === 'class' || key === 'className') {
         el.className = val
+      } else if (typeof val === 'boolean') {
+        if (val) {
+          el.setAttribute(key, '')
+        } else {
+          el.removeAttribute(key)
+        }
       } else if (key === 'style') {
         if (typeof val === 'string') {
           el.setAttribute('style', val)

@@ -1,37 +1,48 @@
 import { h, Block } from '@core/index'
-import { Modal } from '@blocks/index'
+import { UserPicker } from '@blocks/user-picker'
+import { TUserPickerMode } from '@blocks/user-picker/types'
+import { TChat } from '@blocks/chat-pannel/types'
+import { getAvatarUrl } from '@shared/utils'
+import { TUser } from '@shared/types/user'
 import { TChatHeaderProps } from './type'
 import Plus from './plus.svg'
 import Cross from './cross.svg'
 import Store from '@shared/store/store'
-import { modalAddMock, modalDeleteMock } from './constants'
-import { TChatResonseData } from './types'
-import userApi from '@shared/api/userApi'
 import chatsApi from '@shared/api/chatsApi'
 
 export class ChatHeaderBlock extends Block<
   TChatHeaderProps,
   {
     showOptionsList: boolean
-    showModal: boolean
-    modalOptions: typeof modalAddMock
-    modalAction?: (userData: TChatResonseData) => void
+    showPicker: boolean
+    pickerMode: TUserPickerMode | null
   }
 > {
   constructor(props: TChatHeaderProps) {
     super(props)
     this.state = {
       showOptionsList: false,
-      showModal: false,
-      modalOptions: { ...modalAddMock },
+      showPicker: false,
+      pickerMode: null,
     }
   }
 
   render() {
+    const avatarSrc = getAvatarUrl(this.props.chatAvatar)
+    const selectedChatId = Store.getState().selectedChatId as number | undefined
+
     return (
       <div class="chat-window__chat-header-container">
         <div class="chat-window__chat-header-user-info">
-          <div class="chat-window__chat-header-user-info-avatar"></div>
+          <div class="chat-window__chat-header-user-info-avatar">
+            {avatarSrc && (
+              <img
+                class="chat-window__chat-header-user-info-avatar-image"
+                src={avatarSrc}
+                alt="Аватар чата"
+              />
+            )}
+          </div>
           <p class="chat-window__chat-header-user-info-name">
             {this.props.chatName}
           </p>
@@ -44,7 +55,7 @@ export class ChatHeaderBlock extends Block<
           <div class="chat-window__chat-header-options__list">
             <div
               class="chat-window__chat-header-options__list-element"
-              onClick={this.showAddModal}
+              onClick={this.showAddPicker}
             >
               <img
                 class="chat-window__chat-header-options__list-element-icon"
@@ -59,7 +70,7 @@ export class ChatHeaderBlock extends Block<
             </div>
             <div
               class="chat-window__chat-header-options__list-element"
-              onClick={this.showDeleteModal}
+              onClick={this.showDeletePicker}
             >
               <img
                 class="chat-window__chat-header-options__list-element-icon"
@@ -72,19 +83,27 @@ export class ChatHeaderBlock extends Block<
                 Удалить пользователя
               </p>
             </div>
-            {this.state.showModal && (
-              <Modal
-                {...this.state.modalOptions}
-                onClose={() =>
-                  this.setState((prevState) => ({
-                    ...prevState,
-                    showModal: false,
-                  }))
-                }
-                action={this.state.modalAction}
-              />
-            )}
           </div>
+        )}
+        {this.state.showPicker && this.state.pickerMode && selectedChatId && (
+          <UserPicker
+            mode={this.state.pickerMode}
+            chatId={selectedChatId}
+            title={
+              this.state.pickerMode === 'search'
+                ? 'Добавить пользователя'
+                : 'Удалить пользователя'
+            }
+            buttonText={
+              this.state.pickerMode === 'search' ? 'Добавить' : 'Удалить'
+            }
+            onClose={this.closePicker}
+            onSelect={
+              this.state.pickerMode === 'search'
+                ? this.addUser
+                : this.deleteUser
+            }
+          />
         )}
       </div>
     )
@@ -94,62 +113,57 @@ export class ChatHeaderBlock extends Block<
     this.setState({ showOptionsList: !this.state.showOptionsList })
   }
 
-  showAddModal = () => {
-    this.setState((prevState) => ({
-      ...prevState,
-      showModal: true,
-      modalOptions: modalAddMock,
-      modalAction: this.addUser,
-    }))
+  private closePicker = () => {
+    this.setState({
+      showPicker: false,
+      pickerMode: null,
+      showOptionsList: false,
+    })
   }
 
-  showDeleteModal = () => {
-    this.setState((prevState) => ({
-      ...prevState,
-      showModal: true,
-      modalOptions: modalDeleteMock,
-      modalAction: this.deleteUser,
-    }))
+  showAddPicker = () => {
+    this.setState({
+      showPicker: true,
+      pickerMode: 'search',
+      showOptionsList: false,
+    })
   }
 
-  getUser = async (userData: TChatResonseData) => {
+  showDeletePicker = () => {
+    this.setState({
+      showPicker: true,
+      pickerMode: 'list',
+      showOptionsList: false,
+    })
+  }
+
+  private addUser = async (user: TUser) => {
     const chatId = Store.getState().selectedChatId as number
-    console.log(userData, `userData`)
-    try {
-      const response = await userApi.searchUser(userData.login)
-      const userId = response?.[0]?.id as number
-      return { chatId, userId }
-    } catch (error) {
-      console.error('Ошибка:', error)
-      return { chatId, userId: undefined }
-    }
+
+    await chatsApi.addChatUser({
+      users: [user.id],
+      chatId,
+    })
   }
 
-  addUser = async (userData: TChatResonseData) => {
-    try {
-      const reqInfo = await this.getUser(userData)
-      await chatsApi.addChatUser({
-        users: [reqInfo?.userId as number],
-        chatId: reqInfo.chatId,
-      })
-    } catch (error) {
-      console.error('Ошибка:', error)
-    } finally {
-      this.setState((prevState) => ({ ...prevState, showModal: false }))
-    }
-  }
+  private deleteUser = async (user: TUser) => {
+    const chatId = Store.getState().selectedChatId as number
+    const currentUser = Store.getState().user as TUser | undefined
 
-  deleteUser = async (userData: TChatResonseData) => {
-    try {
-      const reqInfo = await this.getUser(userData)
-      await chatsApi.deleteChatUser({
-        users: [reqInfo?.userId as number],
-        chatId: reqInfo.chatId,
-      })
-    } catch (error) {
-      console.error('Ошибка:', error)
-    } finally {
-      this.setState((prevState) => ({ ...prevState, showModal: false }))
+    await chatsApi.deleteChatUser({
+      users: [user.id],
+      chatId,
+    })
+
+    if (currentUser && user.id === currentUser.id) {
+      const rawChats = Store.getState().chats
+      const chats: TChat[] = Array.isArray(rawChats)
+        ? rawChats.filter(({ id }) => id !== chatId)
+        : []
+
+      Store.setState('chats', chats)
+      Store.setState('selectedChatId', null)
+      this.props.onLeaveChat()
     }
   }
 }

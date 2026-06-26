@@ -27,7 +27,8 @@ export class ModalBlock<TFormData = unknown> extends Block<
     void Promise.resolve(this.props.action(file as TFormData))
   }
 
-  private handleFormSubmit = () => {
+  private handleFormSubmit = (e: Event) => {
+    e.preventDefault()
     this.props.action?.(this.getFormData() as TFormData)
   }
 
@@ -61,7 +62,7 @@ export class ModalBlock<TFormData = unknown> extends Block<
                 </a>
               )}
               {this.props.modalFields && (
-                <form class="modal-form">
+                <form class="modal-form" onSubmit={this.handleFormSubmit}>
                   {this.props.modalFields.map(({ fieldId, fieldLabel }) => (
                     <Field
                       type="text"
@@ -71,14 +72,13 @@ export class ModalBlock<TFormData = unknown> extends Block<
                       store={this.formStore}
                     />
                   ))}
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    label={this.props.buttonText}
+                  />
                 </form>
               )}
-              <Button
-                type="sumbit"
-                variant="primary"
-                label={this.props.buttonText}
-                onClick={this.handleFormSubmit}
-              />
             </>
           )}
         </div>

@@ -7,6 +7,10 @@
   padding: 12px 0px;
   margin: 0px 10px;
   cursor: pointer;
+
+  &_active {
+    background-color: var(--background-input-color);
+  }
 }
 
 .chat-pannel__chat-card-unread-count {

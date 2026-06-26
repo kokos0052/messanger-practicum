@@ -1,4 +1,5 @@
 import { h, Block } from '@core/index'
+import { validateValue } from '@shared/utils'
 import { TFieldProps } from './types'
 
 export class FiledBlock extends Block<
@@ -69,31 +70,6 @@ export class FiledBlock extends Block<
     )
   }
 
-  private validate(value: string): string | null {
-    const { validators } = this.props
-    if (!validators || !Array.isArray(validators)) return null
-
-    for (const rule of validators) {
-      if (rule.required && !value.trim()) {
-        return 'Поле обязательно для заполнения'
-      }
-      if (rule.minLength && value.length < rule.minLength) {
-        return `Минимальная длина ${rule.minLength} символов`
-      }
-      if (rule.maxLength && value.length > rule.maxLength) {
-        return `Максимальная длина ${rule.maxLength} символов`
-      }
-      if (rule.pattern && !rule.pattern.test(value)) {
-        return 'Неверный формат'
-      }
-      if (rule.custom) {
-        const customError = rule.custom(value)
-        if (customError) return customError
-      }
-    }
-    return null
-  }
-
   private onInput = (e: Event) => {
     const input = e.target as HTMLInputElement
     const newValue = input.value
@@ -109,7 +85,7 @@ export class FiledBlock extends Block<
   private onBlur = (e: Event) => {
     const input = e.target as HTMLInputElement
     const value = input.value
-    const error = this.validate(value)
+    const error = validateValue(value, this.props.validators)
 
     this.state.value = value
 

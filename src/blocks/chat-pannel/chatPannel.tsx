@@ -49,6 +49,10 @@ export class ChatPannelBlock extends Block<
     return this.loadingPromise
   }
 
+  public reloadChats() {
+    return this.loadChats()
+  }
+
   public destroy() {
     this.unsubscribe?.()
     this.unsubscribe = null
@@ -58,6 +62,7 @@ export class ChatPannelBlock extends Block<
   render() {
     const rawChats = Store.getState().chats
     const chats: TChat[] = Array.isArray(rawChats) ? rawChats : []
+    const selectedChatId = Store.getState().selectedChatId as number | undefined
 
     if (this.state.isLoading) {
       return (
@@ -87,9 +92,10 @@ export class ChatPannelBlock extends Block<
           chats.map((chat) => (
             <ChatCard
               {...chat}
+              isActive={chat.id === selectedChatId}
               onClick={() => {
-                this.props.setChatWindow()
                 Store.setState('selectedChatId', chat.id)
+                this.props.setChatWindow()
               }}
             />
           ))

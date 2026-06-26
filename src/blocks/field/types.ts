@@ -1,12 +1,7 @@
 import { Store } from '@shared/store'
+import type { ValidationRule } from '@shared/utils'
 
-type ValidationRule = {
-  required?: boolean
-  minLength?: number
-  maxLength?: number
-  pattern?: RegExp
-  custom?: (value: string) => string | null
-}
+export type { ValidationRule }
 
 export type TFieldProps = {
   type: string
