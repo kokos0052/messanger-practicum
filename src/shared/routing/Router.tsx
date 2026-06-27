@@ -1,6 +1,6 @@
 import authApi from '@shared/api/authApi'
 import { Route } from './Route'
-import type { TBlockConstructor } from './types'
+import type { BlockClass, TBlockConstructor } from './types'
 import Store from '@shared/store/store'
 
 const PUBLIC_ERROR_PAGES = new Set(['/404', '/500'])
@@ -22,12 +22,12 @@ export class Router {
     Router.__instance = this
   }
 
-  public use<PropsType>(
+  public use<PropsType extends object>(
     pathname: string,
-    block: TBlockConstructor,
+    block: BlockClass<PropsType>,
     blockProps?: PropsType
   ): this {
-    const route = new Route(pathname, block, {
+    const route = new Route(pathname, block as TBlockConstructor, {
       rootQuery: this._rootQuery,
       blockProps: blockProps as object,
     })
@@ -35,18 +35,18 @@ export class Router {
     return this
   }
 
-  public protectedUse<PropsType>(
+  public protectedUse<PropsType extends object>(
     pathname: string,
-    block: TBlockConstructor,
+    block: BlockClass<PropsType>,
     blockProps?: PropsType
   ): this {
     this._protectedPaths.add(pathname)
     return this.use(pathname, block, blockProps)
   }
 
-  public guestUse<PropsType>(
+  public guestUse<PropsType extends object>(
     pathname: string,
-    block: TBlockConstructor,
+    block: BlockClass<PropsType>,
     blockProps?: PropsType
   ): this {
     this._guestPaths.add(pathname)

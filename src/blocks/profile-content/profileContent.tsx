@@ -8,6 +8,7 @@ import {
   deleteAuthCookies,
   goToLink,
   isFormValid,
+  normalizePhoneForApi,
   ValidationRule,
 } from '@shared/utils'
 import {
@@ -224,7 +225,10 @@ export class ProfileContentBlock extends Block<
 
     try {
       if (this.state.profileType === EProfileTypes.CHANGE_INFO) {
-        await userApi.unpdateProfile(this.formValues)
+        await userApi.unpdateProfile({
+          ...this.formValues,
+          phone: normalizePhoneForApi(this.formValues.phone ?? ''),
+        })
         const response = await authApi.getUser()
         Store.setState('user', response)
         this.setProfileType(EProfileTypes.DEFAULT)

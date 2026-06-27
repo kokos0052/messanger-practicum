@@ -2,13 +2,14 @@ import { h, Block, Fragment } from '@core/index'
 import { Button, Field } from '@blocks/index'
 import { TModalProps } from './types'
 import { Store } from '@shared/store'
+import Cross from '@shared/static/cross.svg'
 
 export class ModalBlock<TFormData = unknown> extends Block<
   TModalProps<TFormData>
 > {
   private formStore = new Store()
 
-  handleOverlayClick = (e: MouseEvent) => {
+  handleOverlayClick = (e: Event) => {
     if (e.target === e.currentTarget && this.props.onClose) {
       this.props.onClose(e)
     }
@@ -81,6 +82,15 @@ export class ModalBlock<TFormData = unknown> extends Block<
               )}
             </>
           )}
+          <button
+            class="modal-close-btn"
+            onClick={(e: Event) => {
+              e.preventDefault()
+              this.props.onClose()
+            }}
+          >
+            <img src={Cross} />
+          </button>
         </div>
       </div>
     )

@@ -3,6 +3,7 @@ import { Button } from '@blocks/index'
 import chatsApi from '@shared/api/chatsApi'
 import userApi from '@shared/api/userApi'
 import { TUser } from '@shared/types/user'
+import Cross from '@shared/static/cross.svg'
 import { TUserPickerProps } from './types'
 import { getUserLabel, normalizeUsers } from './utils'
 
@@ -41,13 +42,13 @@ export class UserPickerBlock extends Block<TUserPickerProps, TUserPickerState> {
     }
   }
 
-  private handleOverlayClick = (e: MouseEvent) => {
+  private handleOverlayClick = (e: Event) => {
     if (e.target === e.currentTarget) {
       this.props.onClose()
     }
   }
 
-  private handleWindowClick = (e: MouseEvent) => {
+  private handleWindowClick = (e: Event) => {
     e.stopPropagation()
   }
 
@@ -207,9 +208,7 @@ export class UserPickerBlock extends Block<TUserPickerProps, TUserPickerState> {
                 />
               </div>
             )}
-            {isLoading && (
-              <p class="user-picker__status">Загрузка...</p>
-            )}
+            {isLoading && <p class="user-picker__status">Загрузка...</p>}
             {!isLoading && error && (
               <p class="user-picker__status user-picker__status_error">
                 {error}
@@ -223,6 +222,15 @@ export class UserPickerBlock extends Block<TUserPickerProps, TUserPickerState> {
               disabled={isSubmitDisabled}
             />
           </form>
+          <button
+            class="modal-close-btn"
+            onClick={(e: Event) => {
+              e.preventDefault()
+              this.props.onClose()
+            }}
+          >
+            <img src={Cross} />
+          </button>
         </div>
       </div>
     )

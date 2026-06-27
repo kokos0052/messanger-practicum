@@ -1,8 +1,7 @@
+import { BASE_URL } from './constants'
 import { BaseAPI, HTTPTransport } from './core'
 
-const authApiInstance = new HTTPTransport(
-  'https://ya-praktikum.tech/api/v2/auth'
-)
+const authApiInstance = new HTTPTransport(`${BASE_URL}/auth`)
 
 class AuthApi extends BaseAPI {
   signup(data: Record<string, unknown>) {

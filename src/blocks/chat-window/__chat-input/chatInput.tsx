@@ -1,7 +1,7 @@
 import { h, Block } from '@core/index'
-import File from './file.svg'
-import Content from './content.svg'
-import Location from './location.svg'
+import File from '@shared/static/file.svg'
+import Content from '@shared/static/content.svg'
+import Location from '@shared/static/location.svg'
 
 export class ChatInputBlock extends Block<{}, { showInputOptions: boolean }> {
   constructor() {

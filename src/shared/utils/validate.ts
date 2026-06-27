@@ -6,6 +6,13 @@ export type ValidationRule = {
   custom?: (value: string) => string | null
 }
 
+export const REQUIRED_VALIDATORS: ValidationRule[] = [{ required: true }]
+
+export const PASSWORD_VALIDATORS: ValidationRule[] = [
+  { required: true },
+  { minLength: 6 },
+]
+
 export function validateValue(
   value: string,
   validators?: ValidationRule[]

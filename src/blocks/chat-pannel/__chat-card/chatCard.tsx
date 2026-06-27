@@ -1,10 +1,13 @@
 import { h, Block } from '../../../core/index'
+import { getAvatarUrl } from '@shared/utils'
 import { formatMessageDate } from '../utils'
 import { ChatInfo } from './__chat-info/chatInfo'
 import { TChatCardProps } from './types'
 
 export class ChatCardBlock extends Block<TChatCardProps> {
   render() {
+    const avatarSrc = getAvatarUrl(this.props.avatar)
+
     return (
       <div
         class={`chat-pannel__chat-card-container${
@@ -12,7 +15,15 @@ export class ChatCardBlock extends Block<TChatCardProps> {
         }`}
         onClick={() => this.props.onClick()}
       >
-        <div class="chat-pannel__chat-card__avatar"></div>
+        <div class="chat-pannel__chat-card__avatar">
+          {avatarSrc && (
+            <img
+              class="chat-pannel__chat-card__avatar-image"
+              src={avatarSrc}
+              alt={`Аватар чата ${this.props.title}`}
+            />
+          )}
+        </div>
         <ChatInfo
           chatName={this.props.title}
           isOwnMessage={false}

@@ -1,9 +1,16 @@
 import { TUser } from '@shared/types/user'
-import { ValidationRule } from '@shared/utils'
+import {
+  applyPhoneMask,
+  PASSWORD_VALIDATORS,
+  PHONE_VALIDATORS,
+  REQUIRED_VALIDATORS,
+  ValidationRule,
+} from '@shared/utils'
 import { TCellBlockProps } from './__cell/types'
 
-const REQUIRED: ValidationRule[] = [{ required: true }]
-const PASSWORD: ValidationRule[] = [{ required: true }, { minLength: 6 }]
+const REQUIRED = REQUIRED_VALIDATORS
+const PASSWORD = PASSWORD_VALIDATORS
+const PHONE = PHONE_VALIDATORS
 
 const PROFILE_CELL_FIELDS: Omit<TCellBlockProps, 'cellValue'>[] = [
   {
@@ -43,9 +50,10 @@ const PROFILE_CELL_FIELDS: Omit<TCellBlockProps, 'cellValue'>[] = [
   {
     cellKey: 'Телефон',
     cellId: 'info_phone',
-    cellType: 'text',
+    cellType: 'tel',
     cellName: 'phone',
-    validators: REQUIRED,
+    validators: PHONE,
+    mask: 'phone',
   },
 ]
 
@@ -62,7 +70,7 @@ export const passwordCells: TCellBlockProps[] = [
     cellId: 'info_old_password',
     cellType: 'password',
     cellName: 'old_password',
-    validators: REQUIRED,
+    validators: PASSWORD,
   },
   {
     cellKey: 'Новый пароль',
@@ -83,10 +91,16 @@ export const passwordCells: TCellBlockProps[] = [
 ]
 
 export function buildProfileCells(user: TUser): TCellBlockProps[] {
-  return PROFILE_CELL_FIELDS.map((field) => ({
-    ...field,
-    cellValue: String(user[field.cellName as keyof TUser] ?? ''),
-  }))
+  return PROFILE_CELL_FIELDS.map((field) => {
+    const rawValue = String(user[field.cellName as keyof TUser] ?? '')
+    const cellValue =
+      field.mask === 'phone' ? applyPhoneMask(rawValue) : rawValue
+
+    return {
+      ...field,
+      cellValue,
+    }
+  })
 }
 
 export function getProfileFormFields(): {

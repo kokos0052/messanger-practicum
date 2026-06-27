@@ -1,8 +1,7 @@
+import { BASE_URL } from './constants'
 import { BaseAPI, HTTPTransport } from './core'
 
-const userApiInstance = new HTTPTransport(
-  'https://ya-praktikum.tech/api/v2/user'
-)
+const userApiInstance = new HTTPTransport(`${BASE_URL}/user`)
 
 class UserApi extends BaseAPI {
   unpdateProfile(data: Record<string, unknown>) {

@@ -1,5 +1,5 @@
 import { h, Block } from '@core/index'
-import { validateValue } from '@shared/utils'
+import { applyPhoneMask, validateValue } from '@shared/utils'
 import { TFieldProps } from './types'
 
 export class FiledBlock extends Block<
@@ -41,7 +41,18 @@ export class FiledBlock extends Block<
     }
   }
 
+  private formatValue(value: string): string {
+    if (this.props.mask === 'phone') {
+      return applyPhoneMask(value)
+    }
+
+    return value
+  }
+
   render() {
+    const placeholder =
+      this.props.mask === 'phone' ? '+7 (___) ___-__-__' : ' '
+
     return (
       <div class={`form-input${this.state.error ? ' form-input--error' : ''}`}>
         <div class="form-input__field-wrapper">
@@ -54,7 +65,7 @@ export class FiledBlock extends Block<
             onInput={this.onInput}
             onChange={this.onInput}
             onBlur={this.onBlur}
-            placeholder=" "
+            placeholder={placeholder}
           />
           <label class="form-input__label" for={this.props.id}>
             {this.props.label}
@@ -72,7 +83,7 @@ export class FiledBlock extends Block<
 
   private onInput = (e: Event) => {
     const input = e.target as HTMLInputElement
-    const newValue = input.value
+    const newValue = this.formatValue(input.value)
 
     this.state.value = newValue
     this.props.store?.setState(this.props.name, newValue)
@@ -84,7 +95,7 @@ export class FiledBlock extends Block<
 
   private onBlur = (e: Event) => {
     const input = e.target as HTMLInputElement
-    const value = input.value
+    const value = this.formatValue(input.value)
     const error = validateValue(value, this.props.validators)
 
     this.state.value = value

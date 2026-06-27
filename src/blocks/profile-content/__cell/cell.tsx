@@ -1,5 +1,5 @@
 import { h, Block } from '../../../core'
-import { validateValue } from '@shared/utils'
+import { applyPhoneMask, validateValue } from '@shared/utils'
 import { TCellBlockProps } from './types'
 
 export class CellBlock extends Block<
@@ -18,15 +18,25 @@ export class CellBlock extends Block<
     return this.props.resolveValidators?.() ?? this.props.validators
   }
 
+  private formatValue(value: string): string {
+    if (this.props.mask === 'phone') {
+      return applyPhoneMask(value)
+    }
+
+    return value
+  }
+
   private onInput = (e: Event) => {
     const input = e.target as HTMLInputElement
-    this.state.value = input.value
-    this.props.onChange?.(this.props.cellName, input.value)
+    const newValue = this.formatValue(input.value)
+
+    this.state.value = newValue
+    this.props.onChange?.(this.props.cellName, newValue)
   }
 
   private onBlur = (e: Event) => {
     const input = e.target as HTMLInputElement
-    const value = input.value
+    const value = this.formatValue(input.value)
     const error = validateValue(value, this.getValidators())
 
     this.state.value = value
@@ -70,6 +80,7 @@ export class CellBlock extends Block<
               type={cellType}
               name={this.props.cellName}
               value={value}
+              placeholder={this.props.mask === 'phone' ? '+7 (___) ___-__-__' : undefined}
               onInput={this.onInput}
               onBlur={this.onBlur}
             />

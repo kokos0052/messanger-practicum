@@ -1,8 +1,7 @@
+import { BASE_URL } from './constants'
 import { BaseAPI, HTTPTransport } from './core'
 
-const chatsApiInstance = new HTTPTransport(
-  'https://ya-praktikum.tech/api/v2/chats'
-)
+const chatsApiInstance = new HTTPTransport(`${BASE_URL}/chats`)
 
 class ChatsApi extends BaseAPI {
   getChats() {
@@ -45,7 +44,7 @@ class ChatsApi extends BaseAPI {
     return chatsApiInstance.get(`/new/${id}`)
   }
 
-  updateChatAvatar(data: Record<string, unknown>) {
+  updateChatAvatar(data: FormData | Record<string, unknown>) {
     return chatsApiInstance.put('/avatar', { data })
   }
 

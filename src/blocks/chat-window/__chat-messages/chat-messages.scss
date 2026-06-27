@@ -67,10 +67,10 @@
 
 .chat-window__chat-messages-own-time::after {
   display: block;
-  content: "";
+  content: '';
   height: 9px;
   width: 9px;
-  background: url("./check.svg") no-repeat center;
+  background: url('/src/shared/static/check.svg') no-repeat center;
   position: absolute;
   left: -14px;
   top: 4px;

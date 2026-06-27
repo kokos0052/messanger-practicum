@@ -1,7 +1,7 @@
 import { h, Block } from '@core/index'
 import { getAvatarUrl } from '@shared/utils'
 import { TAvatarProps } from './types'
-import AvatarImage from './avatar.png'
+import AvatarImage from '@shared/static/avatar.png'
 
 export class AvatarBlock extends Block<TAvatarProps> {
   render() {

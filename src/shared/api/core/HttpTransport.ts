@@ -1,5 +1,5 @@
 import { METHODS } from './constaints'
-import { HTTPError, RequestOptions } from './types'
+import { HTTPError, HTTPMethod, RequestOptions } from './types'
 import { queryStringify } from './utils'
 
 export class HTTPTransport {
@@ -21,39 +21,19 @@ export class HTTPTransport {
     return `${base}${path}`
   }
 
-  get = <T = any>(url: string, options: RequestOptions = {}): Promise<T> => {
-    return this.request<T>(
-      url,
-      { ...options, method: METHODS.GET },
-      options.timeout
-    )
-  }
+  get: HTTPMethod = (url, options = {}) =>
+    this.request(url, { ...options, method: METHODS.GET }, options.timeout)
 
-  post = <T = any>(url: string, options: RequestOptions = {}): Promise<T> => {
-    return this.request<T>(
-      url,
-      { ...options, method: METHODS.POST },
-      options.timeout
-    )
-  }
+  post: HTTPMethod = (url, options = {}) =>
+    this.request(url, { ...options, method: METHODS.POST }, options.timeout)
 
-  put = <T = any>(url: string, options: RequestOptions = {}): Promise<T> => {
-    return this.request<T>(
-      url,
-      { ...options, method: METHODS.PUT },
-      options.timeout
-    )
-  }
+  put: HTTPMethod = (url, options = {}) =>
+    this.request(url, { ...options, method: METHODS.PUT }, options.timeout)
 
-  delete = <T = any>(url: string, options: RequestOptions = {}): Promise<T> => {
-    return this.request<T>(
-      url,
-      { ...options, method: METHODS.DELETE },
-      options.timeout
-    )
-  }
+  delete: HTTPMethod = (url, options = {}) =>
+    this.request(url, { ...options, method: METHODS.DELETE }, options.timeout)
 
-  request = <T = any>(
+  request = <T = unknown>(
     url: string,
     options: RequestOptions = {},
     timeout: number = 5000

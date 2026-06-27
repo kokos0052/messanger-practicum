@@ -19,6 +19,7 @@
   background-color: var(--background-action-color);
   overflow: hidden;
   flex-shrink: 0;
+  cursor: pointer;
 }
 
 .chat-window__chat-header-user-info-avatar-image {
@@ -39,7 +40,7 @@
   border: none;
   border-radius: 50%;
   z-index: 10;
-  background: url('./options.svg') no-repeat center;
+  background: url('/src/shared/static/options.svg') no-repeat center;
   cursor: pointer;
 }
 
@@ -73,4 +74,12 @@
 
 .chat-window__chat-header-options__list-element-text {
   cursor: pointer;
+
+  &_action {
+    color: var(--primary-action-color);
+  }
+
+  &_warning {
+    color: var(--warning-color);
+  }
 }

@@ -1,5 +1,5 @@
 import { h, Block } from '@core/index'
-import RightArrow from './right-arrow.svg'
+import RightArrow from '@shared/static/right-arrow.svg'
 import { goToLink } from '@shared/utils'
 import { TChatSearchBlockProps } from './types'
 

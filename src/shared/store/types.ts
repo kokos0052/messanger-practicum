@@ -1,3 +1,3 @@
-export type Indexed = { [key: string]: any }
+export type Indexed = Record<string, unknown>
 
 export type Listener = () => void

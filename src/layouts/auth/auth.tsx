@@ -1,7 +1,12 @@
 import { h, Block } from '@core/index'
 import { Field, Button } from '@blocks/index'
+import {
+  goToLink,
+  PASSWORD_VALIDATORS,
+  PHONE_VALIDATORS,
+  REQUIRED_VALIDATORS,
+} from '@shared/utils'
 import { TAuthProps } from './types'
-import { goToLink } from '@shared/utils'
 
 export class AuthBlock extends Block<TAuthProps> {
   constructor(props: TAuthProps) {
@@ -19,17 +24,22 @@ export class AuthBlock extends Block<TAuthProps> {
               id="login"
               name="login"
               label="Логин"
-              validators={[{ required: true }]}
+              validators={REQUIRED_VALIDATORS}
             />
             <Field
               type="password"
               id="password"
               name="password"
               label="Пароль"
-              validators={[{ required: true }, { minLength: 6 }]}
+              validators={PASSWORD_VALIDATORS}
             />
             <div class="button-container button-container-auth__login">
-              <Button variant="primary" label="Авторизоваться" type="submit" />
+              <Button
+                variant="primary"
+                label="Авторизоваться"
+                type="submit"
+                disabled
+              />
               <Button
                 variant="secondary"
                 label="Нет аккаунта?"
@@ -50,52 +60,53 @@ export class AuthBlock extends Block<TAuthProps> {
             id="mail"
             name="email"
             label="Почта"
-            validators={[{ required: true }]}
+            validators={REQUIRED_VALIDATORS}
           />
           <Field
             type="text"
             id="login"
             name="login"
             label="Логин"
-            validators={[{ required: true }]}
+            validators={REQUIRED_VALIDATORS}
           />
           <Field
             type="text"
             id="name"
             name="first_name"
             label="Имя"
-            validators={[{ required: true }]}
+            validators={REQUIRED_VALIDATORS}
           />
           <Field
             type="text"
             id="sername"
             name="second_name"
             label="Фамилия"
-            validators={[{ required: true }]}
+            validators={REQUIRED_VALIDATORS}
           />
           <Field
-            type="text"
+            type="tel"
             id="phone"
             name="phone"
             label="Телефон"
-            validators={[{ required: true }]}
+            mask="phone"
+            validators={PHONE_VALIDATORS}
           />
           <Field
             type="password"
             id="password"
             name="password"
             label="Пароль"
-            validators={[{ required: true }, { minLength: 6 }]}
+            validators={PASSWORD_VALIDATORS}
           />
           <Field
             type="password"
             id="passwordtwo"
             name="password_two"
             label="Пароль (еще раз)"
-            validators={[{ required: true }, { minLength: 6 }]}
+            validators={PASSWORD_VALIDATORS}
           />
           <div class="button-container button-container-auth__signin">
-            <Button variant="primary" label="Авторизоваться" type="submit" />
+            <Button variant="primary" label="Авторизоваться" type="submit" disabled />
             <Button
               variant="secondary"
               label="Войти"
