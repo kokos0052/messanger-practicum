@@ -19,6 +19,11 @@
   gap: 10px;
 }
 
+.chat-window__chat-messages-empty {
+  color: var(--secondary-text-color);
+  font-size: 12px;
+}
+
 .chat-window__chat-messages-message-container {
   display: flex;
   width: 100%;
@@ -62,10 +67,10 @@
 
 .chat-window__chat-messages-own-time::after {
   display: block;
-  content: "";
+  content: '';
   height: 9px;
   width: 9px;
-  background: url("./check.svg") no-repeat center;
+  background: url('/src/shared/static/check.svg') no-repeat center;
   position: absolute;
   left: -14px;
   top: 4px;

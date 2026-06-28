@@ -3,10 +3,15 @@ type TField = {
   fieldLabel: string
 }
 
-export type TModalProps = {
+export type TModalVariant = 'form' | 'file'
+
+export type TModalProps<TFormData = unknown> = {
   modalTitle: string
   buttonText: string
-  onClose: () => void
+  onClose: (e?: Event) => void
   modalFields?: TField[]
   link?: string
+  variant?: TModalVariant
+  accept?: string
+  action?: (payload: TFormData) => void | Promise<void>
 }

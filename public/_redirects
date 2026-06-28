@@ -1,15 +1,1 @@
-# Делаем чистые URL для всех страниц
-/signUp          /src/pages/signUp.html           200
-/changeInfo      /src/pages/changeInfo.html       200
-/changePassword  /src/pages/changePassword.html   200
-/chat            /src/pages/chat.html             200
-/chatFunctions   /src/pages/chatFunctions.html    200
-/choseChat       /src/pages/choseChat.html        200
-/deleteUser      /src/pages/deleteUser.html       200
-/downloadNewAvatar /src/pages/downloadNewAvatar.html 200
-/login           /src/pages/login.html            200
-/newAvatar       /src/pages/newAvatar.html        200
-/profile         /src/pages/profile.html          200
-/search          /src/pages/search.html           200
-/500             /src/pages/500.html              200
-/*  /src/pages/404.html  404
+/*    /index.html   200

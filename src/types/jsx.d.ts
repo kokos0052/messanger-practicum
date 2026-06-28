@@ -1,16 +1,25 @@
-declare namespace JSX {
-  interface IntrinsicElements {
-    [elemName: string]: {
-      [attrName: string]: any
+import type { HChild, HPropValue, IntrinsicElementProps } from '../core/jsx/types'
+
+export {}
+
+declare global {
+  namespace JSX {
+    interface Element extends HTMLElement {}
+
+    interface ElementChildrenAttribute {
+      children: HChild
     }
-  }
-  interface Element extends HTMLElement {}
-  interface ElementChildrenAttribute {
-    children: {}
-  }
-  interface IntrinsicAttributes {
-    key?: any
+
+    interface IntrinsicAttributes {
+      key?: string | number
+    }
+
+    interface IntrinsicElements {
+      [elemName: string]: IntrinsicElementProps
+    }
   }
 }
 
-type FC<P = {}> = (props: P & { children?: any }) => JSX.Element
+type FC<P extends object = Record<string, never>> = (
+  props: P & { children?: HChild | HChild[] }
+) => JSX.Element

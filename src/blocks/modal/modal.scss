@@ -13,6 +13,7 @@
   justify-content: center;
   align-items: center;
   z-index: 10000;
+  cursor: pointer;
 }
 
 .modal-window {
@@ -24,6 +25,8 @@
   align-items: center;
   gap: 30px;
   min-width: 340px;
+  cursor: default;
+  position: relative;
 }
 
 .modal-title {
@@ -40,4 +43,25 @@
   line-height: 16px;
   word-break: break-word;
   text-align: center;
+  cursor: pointer;
+}
+
+.modal-file-input {
+  display: none;
+}
+
+.modal-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 30px;
+}
+
+.modal-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }

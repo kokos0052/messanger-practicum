@@ -1,4 +1,7 @@
-import { h, Block } from '../../../core/index'
+import { h, Block } from '@core/index'
+import File from '@shared/static/file.svg'
+import Content from '@shared/static/content.svg'
+import Location from '@shared/static/location.svg'
 
 export class ChatInputBlock extends Block<{}, { showInputOptions: boolean }> {
   constructor() {
@@ -24,7 +27,7 @@ export class ChatInputBlock extends Block<{}, { showInputOptions: boolean }> {
             <div class="chat-window__chat-input-options__list-element">
               <img
                 class="chat-window__chat-input-options__list-element-icon"
-                src="./content.svg"
+                src={Content}
                 height="22px"
                 width="22px"
                 alt="Прикрепить медиа"
@@ -36,7 +39,7 @@ export class ChatInputBlock extends Block<{}, { showInputOptions: boolean }> {
             <div class="chat-window__chat-input-options__list-element">
               <img
                 class="chat-window__chat-input-options__list-element-icon"
-                src="./file.svg"
+                src={File}
                 height="22px"
                 width="22px"
                 alt="Приекрепить файл"
@@ -48,7 +51,7 @@ export class ChatInputBlock extends Block<{}, { showInputOptions: boolean }> {
             <div class="chat-window__chat-input-options__list-element">
               <img
                 class="chat-window__chat-input-options__list-element-icon"
-                src="./location.svg"
+                src={Location}
                 height="22px"
                 width="22px"
                 alt="Указать местоположение"

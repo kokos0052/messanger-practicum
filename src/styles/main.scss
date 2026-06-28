@@ -2,7 +2,6 @@
 @use './colors.scss';
 
 @use '../blocks/button/button.scss';
-@use '../blocks/links/links.scss';
 @use '../blocks/field/field.scss';
 @use '../blocks/chat-pannel/chat-pannel.scss';
 @use '../blocks/chat-pannel/__chat-card/chat-card.scss';
@@ -14,12 +13,12 @@
 @use '../blocks/chat-window/__chat-input/chat-input.scss';
 @use '../blocks/chat-window/__chat-messages/chat-messages.scss';
 @use '../blocks/modal/modal.scss';
+@use '../blocks/user-picker/user-picker.scss';
 @use '../blocks/back-pannel/back-pannel.scss';
 @use '../blocks/profile-content/profile-content.scss';
 @use '../blocks/profile-content/__avatar/profile-content__avatar.scss';
 @use '../blocks/profile-content/__cell/cell.scss';
 
-@use '../layouts/navigation/navigation.scss';
 @use '../layouts/auth/auth.scss';
 @use '../layouts/error/error.scss';
 @use '../layouts/chat/chat.scss';

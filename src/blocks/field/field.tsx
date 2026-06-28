@@ -1,10 +1,13 @@
-import { h, Block } from '../../core'
+import { h, Block } from '@core/index'
+import { applyPhoneMask, validateValue } from '@shared/utils'
 import { TFieldProps } from './types'
 
 export class FiledBlock extends Block<
   TFieldProps,
   { value: string; error: string | null }
 > {
+  private unsubscribeFromStore?: () => void
+
   constructor(props: TFieldProps = {} as TFieldProps) {
     const defaults = {
       onChange: null,
@@ -18,7 +21,38 @@ export class FiledBlock extends Block<
     }
   }
 
+  protected componentDidMount() {
+    if (this.props.store) {
+      this.unsubscribeFromStore = this.props.store.subscribe(this.onStoreChange)
+    }
+  }
+
+  protected componentWillUnmount() {
+    this.unsubscribeFromStore?.()
+  }
+
+  private onStoreChange = () => {
+    if (!this.props.store) return
+    const storeValue = this.props.store.getState()[this.props.name] as
+      | string
+      | undefined
+    if (storeValue !== undefined && storeValue !== this.state.value) {
+      this.setState((prev) => ({ ...prev, value: storeValue }))
+    }
+  }
+
+  private formatValue(value: string): string {
+    if (this.props.mask === 'phone') {
+      return applyPhoneMask(value)
+    }
+
+    return value
+  }
+
   render() {
+    const placeholder =
+      this.props.mask === 'phone' ? '+7 (___) ___-__-__' : ' '
+
     return (
       <div class={`form-input${this.state.error ? ' form-input--error' : ''}`}>
         <div class="form-input__field-wrapper">
@@ -28,9 +62,10 @@ export class FiledBlock extends Block<
             type={this.props.type}
             name={this.props.name}
             value={this.state.value}
-            onChange={this.onChange}
+            onInput={this.onInput}
+            onChange={this.onInput}
             onBlur={this.onBlur}
-            placeholder=" "
+            placeholder={placeholder}
           />
           <label class="form-input__label" for={this.props.id}>
             {this.props.label}
@@ -46,36 +81,12 @@ export class FiledBlock extends Block<
     )
   }
 
-  private validate(value: string): string | null {
-    const { validators } = this.props
-    if (!validators || !Array.isArray(validators)) return null
-
-    for (const rule of validators) {
-      if (rule.required && !value.trim()) {
-        return 'Поле обязательно для заполнения'
-      }
-      if (rule.minLength && value.length < rule.minLength) {
-        return `Минимальная длина ${rule.minLength} символов`
-      }
-      if (rule.maxLength && value.length > rule.maxLength) {
-        return `Максимальная длина ${rule.maxLength} символов`
-      }
-      if (rule.pattern && !rule.pattern.test(value)) {
-        return 'Неверный формат'
-      }
-      if (rule.custom) {
-        const customError = rule.custom(value)
-        if (customError) return customError
-      }
-    }
-    return null
-  }
-
-  private onChange = (e: Event) => {
+  private onInput = (e: Event) => {
     const input = e.target as HTMLInputElement
-    const newValue = input.value
+    const newValue = this.formatValue(input.value)
 
-    this.setState((prevState) => ({ ...prevState, value: newValue }))
+    this.state.value = newValue
+    this.props.store?.setState(this.props.name, newValue)
 
     if (typeof this.props.onChange === 'function') {
       this.props.onChange(e)
@@ -83,9 +94,15 @@ export class FiledBlock extends Block<
   }
 
   private onBlur = (e: Event) => {
-    const error = this.validate(this.state.value)
-    this.setState((prevState) => ({ ...prevState, error }))
-    console.log(this.state, `state`)
+    const input = e.target as HTMLInputElement
+    const value = this.formatValue(input.value)
+    const error = validateValue(value, this.props.validators)
+
+    this.state.value = value
+
+    if (error !== this.state.error) {
+      this.setState({ error })
+    }
 
     if (typeof this.props.onBlur === 'function') {
       this.props.onBlur(e)

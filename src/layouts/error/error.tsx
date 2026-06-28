@@ -1,10 +1,7 @@
-import { h, Block } from '../../core'
-import { Button } from '../../blocks/button'
+import { h, Block } from '@core/index'
+import { Button } from '@blocks/index'
 import { TErrorProps } from './types'
-
-function goToChats() {
-  window.location.href = '/chat'
-}
+import { goToLink } from '@shared/utils'
 
 export class ErrorBlock extends Block<TErrorProps> {
   render() {
@@ -17,7 +14,7 @@ export class ErrorBlock extends Block<TErrorProps> {
             <Button
               variant="secondary"
               label="Назад к чатам"
-              onClick={goToChats}
+              onClick={() => goToLink('/messenger')}
             />
           </div>
         </div>

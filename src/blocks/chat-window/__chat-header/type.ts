@@ -1,4 +1,5 @@
 export type TChatHeaderProps = {
   chatName: string
-  toggleModal: () => void
+  chatAvatar?: string | null
+  onLeaveChat: () => void
 }

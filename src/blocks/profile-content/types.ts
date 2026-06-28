@@ -1,4 +1,9 @@
 export type TProfileContentProps = {
-  profileType: 'default' | 'password' | 'changeInfo'
   onChangeAvatar: () => void
+}
+
+export enum EProfileTypes {
+  DEFAULT = 'default',
+  PASSWORD = 'password',
+  CHANGE_INFO = 'changeInfo',
 }
