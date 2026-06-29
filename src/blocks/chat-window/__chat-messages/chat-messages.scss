@@ -83,3 +83,20 @@
 .chat-window__chat-messages-other-time {
   color: var(--ssecondary-text-color);
 }
+
+.chat-window__chat-messages-media {
+  display: block;
+  max-width: 240px;
+  border-radius: 12px;
+  margin-bottom: 4px;
+}
+
+.chat-window__chat-messages-media--video {
+  max-height: 180px;
+}
+
+.chat-window__chat-messages-file-link {
+  color: var(--primary-action-color);
+  text-decoration: underline;
+  word-break: break-all;
+}

@@ -3,6 +3,12 @@ export { render } from './render'
 export { goToLink } from './goToLink'
 export { deleteCookie, deleteAuthCookies } from './cookies'
 export { getAvatarUrl } from './avatar'
+export {
+  getResourceUrl,
+  normalizeResourcePath,
+  isImageResource,
+  getResourceFileName,
+} from './resources'
 export { validateValue, isFormValid, PASSWORD_VALIDATORS, REQUIRED_VALIDATORS } from './validate'
 export type { ValidationRule } from './validate'
 export {
