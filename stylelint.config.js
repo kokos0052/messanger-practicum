@@ -1,10 +1,8 @@
 /** @type {import('stylelint').Config} */
 export default {
-    extends: ['stylelint-config-standard-scss', 'stylelint-config-prettier'],
+    extends: ['stylelint-config-standard-scss'],
 
     rules: {
-        'order/properties-alphabetical-order': null,
-
         'scss/dollar-variable-pattern': null,
         'selector-class-pattern': null,
         'max-nesting-depth': 5,
