@@ -1,8 +1,10 @@
 type TMedia = {
   url: string
+  type: 'image' | 'video' | 'file'
+  name?: string
 }
 
-type TMessage = {
+export type TChatMessage = {
   isOwn: boolean
   text: string
   time: string
@@ -11,5 +13,5 @@ type TMessage = {
 
 export type TChatMessagesProps = {
   date: string
-  messages: TMessage[]
+  messages: TChatMessage[]
 }
